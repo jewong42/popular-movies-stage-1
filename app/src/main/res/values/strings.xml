@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Popular Movies</string>
+    <string-array name="discovery_array">
+        <item>@string/most_popular</item>
+        <item>@string/highest_rated</item>
+    </string-array>
+    <string name="most_popular">Most popular</string>
+    <string name="highest_rated">Highest rated</string>
+    <string name="popularity_desc">popularity.desc</string>
+    <string name="vote_average_desc">vote_average.desc</string>
+    <string name="data_error">There was an error fetching the data. Please check if your API key is valid.</string>
+</resources>

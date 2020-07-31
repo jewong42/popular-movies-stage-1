@@ -11,5 +11,10 @@
     <string name="data_error">There was an error fetching the data. Please check if your API key is valid.</string>
 
     <string name="poster_description">poster</string>
+    <string name="details">Details</string>
+    <string name="reviews">Reviews</string>
+    <string name="trailer">trailer</string>
+    <string name="mock_large">Donec in elementum elit. Integer consectetur maximus ligula. Nam lectus metus, finibus at augue sed, porttitor elementum metus. Suspendisse lacinia feugiat lectus, vel rutrum neque scelerisque ac. Etiam semper erat et sem auctor dapibus. Vivamus accumsan pharetra justo, ac auctor ipsum malesuada eu. Quisque sollicitudin vulputate eros, a vulputate massa sodales eu. In lacinia nisl et elit gravida elementum.</string>
+    <string name="mock_value">Lorem ipsum</string>
 
 </resources>

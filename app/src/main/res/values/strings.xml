@@ -6,7 +6,7 @@
     </string-array>
     <string name="most_popular">Most popular</string>
     <string name="highest_rated">Highest rated</string>
-    <string name="popularity_desc">popularity.desc</string>
-    <string name="vote_average_desc">vote_average.desc</string>
+    <string name="popularity_desc">popular</string>
+    <string name="vote_average_desc">top_rated</string>
     <string name="data_error">There was an error fetching the data. Please check if your API key is valid.</string>
 </resources>

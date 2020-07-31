@@ -10,7 +10,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,7 +19,6 @@ import com.jewong.popularmovies.data.MovieList;
 import com.jewong.popularmovies.rest.MovieAPIClient;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -106,7 +104,7 @@ public class MovieListActivity extends AppCompatActivity implements MovieAdapter
      */
     private void getData(String sortBy) {
         mProgressBar.setVisibility(View.VISIBLE);
-        mMovieAPIClient.getMovieByDiscover(sortBy, new Callback<MovieList>() {
+        mMovieAPIClient.getMovies(sortBy, new Callback<MovieList>() {
             @Override
             public void onResponse(Call<MovieList> call, Response<MovieList> response) {
                 if (response.body() != null && response.body().getResults() != null) {

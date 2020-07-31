@@ -1,8 +1,12 @@
 package com.jewong.popularmovies.rest;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jewong.popularmovies.data.MovieList;
+import com.jewong.popularmovies.data.ReviewList;
+import com.jewong.popularmovies.data.VideoList;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -35,19 +39,35 @@ public class MovieAPIClient {
         this.mMovieAPI = retrofit.create(MovieAPI.class);
     }
 
-    public void getMovieByDiscover(String sortBy, Callback<MovieList> callback) {
-        mMovieAPI.getMovieByDiscover(sortBy, API_KEY)
-                .enqueue(new Callback<MovieList>() {
-                    @Override
-                    public void onResponse(Call<MovieList> call, Response<MovieList> response) {
-                        callback.onResponse(call, response);
-                    }
+    public void getMovies(String sortBy, Callback<MovieList> callback) {
+        mMovieAPI.getMovies(sortBy, API_KEY).enqueue(new MovieAPIResponse<>(callback));
+    }
 
-                    @Override
-                    public void onFailure(Call<MovieList> call, Throwable t) {
-                        callback.onFailure(call, t);
-                    }
-                });
+    public void getVideos(String movieId, Callback<VideoList> callback) {
+        mMovieAPI.getVideos(movieId, API_KEY).enqueue(new MovieAPIResponse<>(callback));
+    }
+
+    public void getReviews(String movieId, Callback<ReviewList> callback) {
+        mMovieAPI.getReviews(movieId, API_KEY).enqueue(new MovieAPIResponse<>(callback));
+    }
+
+    private class MovieAPIResponse<T> implements Callback<T> {
+
+        Callback<T> mCallback;
+
+        public MovieAPIResponse(Callback<T> callback) {
+            mCallback = callback;
+        }
+
+        @Override
+        public void onResponse(@NonNull Call<T> call, @NonNull Response<T> response) {
+            mCallback.onResponse(call, response);
+        }
+
+        @Override
+        public void onFailure(@NonNull Call<T> call, @NonNull Throwable t) {
+            mCallback.onFailure(call, t);
+        }
     }
 
 }

@@ -9,4 +9,7 @@
     <string name="popularity_desc">popular</string>
     <string name="vote_average_desc">top_rated</string>
     <string name="data_error">There was an error fetching the data. Please check if your API key is valid.</string>
+
+    <string name="poster_description">poster</string>
+
 </resources>

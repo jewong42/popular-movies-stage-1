@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MovieListActivity">
+        <activity android:name=".ui.MovieListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -18,7 +18,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".DetailsActivity" />
+        <activity android:name=".ui.MovieDetailsActivity" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

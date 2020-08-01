@@ -1,13 +1,20 @@
 <resources>
     <string name="app_name">Popular Movies</string>
     <string-array name="discovery_array">
-        <item>@string/most_popular</item>
-        <item>@string/highest_rated</item>
+        <item>@string/popular_label</item>
+        <item>@string/highest_rated_label</item>
+        <item>@string/favorites_label</item>
     </string-array>
-    <string name="most_popular">Most popular</string>
-    <string name="highest_rated">Highest rated</string>
-    <string name="popularity_desc">popular</string>
-    <string name="vote_average_desc">top_rated</string>
+
+    <string name="popular_label">Most popular</string>
+    <string name="highest_rated_label">Highest rated</string>
+    <string name="favorites_label">My favorites</string>
+
+    <string name="favorite">favorite</string>
+    <string name="unfavorite">unfavorite</string>
+
+
+
     <string name="data_error">There was an error fetching the data. Please check if your API key is valid.</string>
 
     <string name="poster_description">poster</string>
@@ -16,5 +23,6 @@
     <string name="trailer">trailer</string>
     <string name="mock_large">Donec in elementum elit. Integer consectetur maximus ligula. Nam lectus metus, finibus at augue sed, porttitor elementum metus. Suspendisse lacinia feugiat lectus, vel rutrum neque scelerisque ac. Etiam semper erat et sem auctor dapibus. Vivamus accumsan pharetra justo, ac auctor ipsum malesuada eu. Quisque sollicitudin vulputate eros, a vulputate massa sodales eu. In lacinia nisl et elit gravida elementum.</string>
     <string name="mock_value">Lorem ipsum</string>
+
 
 </resources>

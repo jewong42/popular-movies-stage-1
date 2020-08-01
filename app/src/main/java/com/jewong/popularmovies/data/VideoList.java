@@ -20,16 +20,8 @@ public class VideoList implements Serializable {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     public List<Video> getResults() {
         return results;
-    }
-
-    public void setResults(List<Video> results) {
-        this.results = results;
     }
 
 }

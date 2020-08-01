@@ -43,11 +43,11 @@ public class MovieAPIClient {
         mMovieAPI.getMovies(sortBy, API_KEY).enqueue(new MovieAPIResponse<>(callback));
     }
 
-    public void getVideos(String movieId, Callback<VideoList> callback) {
+    public void getVideos(int movieId, Callback<VideoList> callback) {
         mMovieAPI.getVideos(movieId, API_KEY).enqueue(new MovieAPIResponse<>(callback));
     }
 
-    public void getReviews(String movieId, Callback<ReviewList> callback) {
+    public void getReviews(int movieId, Callback<ReviewList> callback) {
         mMovieAPI.getReviews(movieId, API_KEY).enqueue(new MovieAPIResponse<>(callback));
     }
 

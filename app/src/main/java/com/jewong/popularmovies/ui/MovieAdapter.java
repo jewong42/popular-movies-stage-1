@@ -23,7 +23,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     private MovieAdapterCallback mMovieAdapterCallback;
 
     public MovieAdapter(ArrayList<Movie> dataSet, MovieAdapterCallback callback) {
-        if (dataSet != null) setData(dataSet);
+        setData(dataSet);
         mMovieAdapterCallback = callback;
     }
 
@@ -53,7 +53,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
     public void setData(List<Movie> results) {
         mDataset.clear();
-        mDataset.addAll(results);
+        if (results != null) mDataset.addAll(results);
         notifyDataSetChanged();
     }
 

@@ -18,12 +18,12 @@ public interface MovieAPI {
 
     @GET("3/movie/{movie_id}/videos")
     Call<VideoList> getVideos(
-            @Path("movie_id") String movieId,
+            @Path("movie_id") int movieId,
             @Query("api_key") String apiKey);
 
     @GET("3/movie/{movie_id}/reviews")
     Call<ReviewList> getReviews(
-            @Path("movie_id") String movieId,
+            @Path("movie_id") int movieId,
             @Query("api_key") String apiKey);
 
 }

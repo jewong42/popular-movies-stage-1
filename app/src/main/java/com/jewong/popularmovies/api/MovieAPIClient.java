@@ -1,4 +1,4 @@
-package com.jewong.popularmovies.rest;
+package com.jewong.popularmovies.api;
 
 import androidx.annotation.NonNull;
 

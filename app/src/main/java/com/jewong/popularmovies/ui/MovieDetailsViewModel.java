@@ -7,8 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.jewong.popularmovies.AppExecutors;
-import com.jewong.popularmovies.State;
+import com.jewong.popularmovies.common.AppExecutors;
 import com.jewong.popularmovies.data.Movie;
 import com.jewong.popularmovies.data.Review;
 import com.jewong.popularmovies.data.ReviewList;
@@ -16,7 +15,7 @@ import com.jewong.popularmovies.data.Video;
 import com.jewong.popularmovies.data.VideoList;
 import com.jewong.popularmovies.model.AppDatabase;
 import com.jewong.popularmovies.model.FavoriteMovieEntry;
-import com.jewong.popularmovies.rest.MovieAPIClient;
+import com.jewong.popularmovies.api.MovieAPIClient;
 
 import java.util.List;
 

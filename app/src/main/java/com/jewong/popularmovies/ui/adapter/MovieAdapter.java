@@ -1,4 +1,4 @@
-package com.jewong.popularmovies.ui;
+package com.jewong.popularmovies.ui.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,7 +66,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         }
     }
 
-    interface MovieAdapterCallback {
+    public interface MovieAdapterCallback {
         void onMovieClick(Movie movie);
     }
 

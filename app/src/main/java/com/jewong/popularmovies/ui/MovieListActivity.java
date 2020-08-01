@@ -15,9 +15,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jewong.popularmovies.R;
-import com.jewong.popularmovies.SortBy;
+import com.jewong.popularmovies.data.stringdef.SortBy;
 import com.jewong.popularmovies.data.Movie;
 import com.jewong.popularmovies.databinding.ActivityMovieListBinding;
+import com.jewong.popularmovies.ui.adapter.MovieAdapter;
 
 import java.util.List;
 

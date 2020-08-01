@@ -17,6 +17,7 @@ import com.jewong.popularmovies.data.Movie;
 import com.jewong.popularmovies.data.Review;
 import com.jewong.popularmovies.data.Video;
 import com.jewong.popularmovies.databinding.ActivityMovieDetailsBinding;
+import com.jewong.popularmovies.ui.adapter.ReviewAdapter;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.jewong.popularmovies.rest;
+package com.jewong.popularmovies.api;
 
 import com.jewong.popularmovies.data.MovieList;
 import com.jewong.popularmovies.data.ReviewList;

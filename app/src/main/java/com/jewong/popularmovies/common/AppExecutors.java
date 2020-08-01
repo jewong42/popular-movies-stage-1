@@ -1,4 +1,4 @@
-package com.jewong.popularmovies;
+package com.jewong.popularmovies.common;
 
 import android.os.Handler;
 import android.os.Looper;

@@ -1,4 +1,4 @@
-package com.jewong.popularmovies;
+package com.jewong.popularmovies.data.stringdef;
 
 import androidx.annotation.StringDef;
 

@@ -1,7 +1,5 @@
 package com.jewong.popularmovies.api;
 
-import androidx.annotation.NonNull;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jewong.popularmovies.data.MovieList;
@@ -10,9 +8,7 @@ import com.jewong.popularmovies.data.VideoList;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -40,34 +36,15 @@ public class MovieAPIClient {
     }
 
     public void getMovies(String sortBy, Callback<MovieList> callback) {
-        mMovieAPI.getMovies(sortBy, API_KEY).enqueue(new MovieAPIResponse<>(callback));
+        mMovieAPI.getMovies(sortBy, API_KEY).enqueue(callback);
     }
 
     public void getVideos(int movieId, Callback<VideoList> callback) {
-        mMovieAPI.getVideos(movieId, API_KEY).enqueue(new MovieAPIResponse<>(callback));
+        mMovieAPI.getVideos(movieId, API_KEY).enqueue(callback);
     }
 
     public void getReviews(int movieId, Callback<ReviewList> callback) {
-        mMovieAPI.getReviews(movieId, API_KEY).enqueue(new MovieAPIResponse<>(callback));
-    }
-
-    private class MovieAPIResponse<T> implements Callback<T> {
-
-        Callback<T> mCallback;
-
-        public MovieAPIResponse(Callback<T> callback) {
-            mCallback = callback;
-        }
-
-        @Override
-        public void onResponse(@NonNull Call<T> call, @NonNull Response<T> response) {
-            mCallback.onResponse(call, response);
-        }
-
-        @Override
-        public void onFailure(@NonNull Call<T> call, @NonNull Throwable t) {
-            mCallback.onFailure(call, t);
-        }
+        mMovieAPI.getReviews(movieId, API_KEY).enqueue(callback);
     }
 
 }

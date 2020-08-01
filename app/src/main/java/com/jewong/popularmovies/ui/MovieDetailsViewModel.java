@@ -14,7 +14,6 @@ import com.jewong.popularmovies.data.ReviewList;
 import com.jewong.popularmovies.data.Video;
 import com.jewong.popularmovies.data.VideoList;
 import com.jewong.popularmovies.model.AppDatabase;
-import com.jewong.popularmovies.model.FavoriteMovieEntry;
 import com.jewong.popularmovies.api.MovieAPIClient;
 
 import java.util.List;
@@ -56,10 +55,9 @@ public class MovieDetailsViewModel extends AndroidViewModel {
         AppExecutors.getInstance().diskIO().execute(() -> {
             if (mIsFavorite.getValue() != null) {
                 if (mIsFavorite.getValue()) {
-                    FavoriteMovieEntry favorite = new FavoriteMovieEntry(mMovie);
-                    mDatabase.favoriteMovieDao().insertMovie(favorite);
+                    mDatabase.favoritesDao().insertMovie(mMovie);
                 } else {
-                    mDatabase.favoriteMovieDao().deleteMovie(movieID);
+                    mDatabase.favoritesDao().deleteMovie(movieID);
                 }
                 configureIsFavorite(movieID);
             }
@@ -68,7 +66,7 @@ public class MovieDetailsViewModel extends AndroidViewModel {
 
     private void configureIsFavorite(int movieID) {
         AppExecutors.getInstance().diskIO().execute(() -> {
-            Movie favorite = mDatabase.favoriteMovieDao().loadMovie(movieID);
+            Movie favorite = mDatabase.favoritesDao().loadMovie(movieID);
             AppExecutors.getInstance().mainThread().execute(() -> {
                 boolean isFavorite = favorite == null;
                 mIsFavorite.setValue(isFavorite);

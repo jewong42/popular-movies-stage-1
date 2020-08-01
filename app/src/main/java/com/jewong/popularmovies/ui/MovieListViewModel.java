@@ -63,7 +63,7 @@ public class MovieListViewModel extends AndroidViewModel {
 
     public void getFavorites() {
         AppExecutors.getInstance().diskIO().execute(() -> {
-            List<Movie> favorites = mDatabase.favoriteMovieDao().loadAllMovies();
+            List<Movie> favorites = mDatabase.favoritesDao().loadAllMovies();
             AppExecutors.getInstance().mainThread().execute(() ->
                     mMovieList.setValue(favorites));
         });

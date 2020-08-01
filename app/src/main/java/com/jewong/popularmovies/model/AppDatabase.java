@@ -6,7 +6,9 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {FavoriteMovieEntry.class}, version = 1, exportSchema = false)
+import com.jewong.popularmovies.data.Movie;
+
+@Database(entities = {Movie.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase sInstance;
@@ -25,6 +27,6 @@ public abstract class AppDatabase extends RoomDatabase {
         }
     }
 
-    public abstract FavoriteMovieDao favoriteMovieDao();
+    public abstract FavoritesDao favoritesDao();
 
 }

@@ -1,6 +1,7 @@
 package com.jewong.popularmovies.model;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.TypeConverters;
@@ -22,7 +23,7 @@ public interface FavoritesDao {
     @Insert
     void insertMovie(Movie movie);
 
-    @Query("DELETE FROM favorites WHERE id = :movieId")
-    void deleteMovie(int movieId);
+    @Delete
+    void deleteMovie(Movie movieId);
 
 }

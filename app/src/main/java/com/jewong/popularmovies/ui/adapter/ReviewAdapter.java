@@ -18,10 +18,6 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
 
     private ArrayList<Review> mDataset = new ArrayList<>();
 
-    public ReviewAdapter(ArrayList<Review> dataSet) {
-        if (dataSet != null) setData(dataSet);
-    }
-
     @Override
     @NonNull
     public ReviewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

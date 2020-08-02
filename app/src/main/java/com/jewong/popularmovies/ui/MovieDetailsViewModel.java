@@ -15,6 +15,7 @@ import com.jewong.popularmovies.data.Video;
 import com.jewong.popularmovies.data.VideoList;
 import com.jewong.popularmovies.model.AppDatabase;
 import com.jewong.popularmovies.api.MovieAPIClient;
+import com.jewong.popularmovies.model.FavoritesDao;
 
 import java.util.List;
 
@@ -27,46 +28,51 @@ public class MovieDetailsViewModel extends AndroidViewModel {
     MutableLiveData<List<Video>> mVideoList = new MutableLiveData<>();
     MutableLiveData<List<Review>> mReviewList = new MutableLiveData<>();
     MutableLiveData<Boolean> mIsFavorite = new MutableLiveData<>();
+    MutableLiveData<Movie> mMovie = new MutableLiveData<>();
     MutableLiveData<Boolean> mHasFailedToLoad = new MutableLiveData<>();
-    MediatorLiveData<Boolean> mHasDetailsLoaded = new MediatorLiveData<>();
-    AppDatabase mDatabase;
+    MediatorLiveData<Boolean> mHasLoaded = new MediatorLiveData<>();
+    FavoritesDao mFavoritesDao;
     MovieAPIClient mMovieAPIClient = new MovieAPIClient();
-    Movie mMovie;
 
     public MovieDetailsViewModel(@NonNull Application application) {
         super(application);
-        mDatabase = AppDatabase.getInstance(application);
-        mHasDetailsLoaded.addSource(mVideoList, value ->
-                mHasDetailsLoaded.setValue(hasDetailsLoaded()));
-        mHasDetailsLoaded.addSource(mReviewList, value ->
-                mHasDetailsLoaded.setValue(hasDetailsLoaded()));
+        mFavoritesDao = AppDatabase.getInstance(application).favoritesDao();
+        mHasLoaded.addSource(mVideoList, value ->
+                mHasLoaded.setValue(hasLoaded()));
+        mHasLoaded.addSource(mReviewList, value ->
+                mHasLoaded.setValue(hasLoaded()));
+        mHasLoaded.addSource(mIsFavorite, value ->
+                mHasLoaded.setValue(hasLoaded()));
+        mHasLoaded.addSource(mMovie, value ->
+                mHasLoaded.setValue(hasLoaded()));
     }
 
     public void loadDetails(Movie movie) {
-        mMovie = movie;
-        int movieID = mMovie.getId();
-        configureIsFavorite(movieID);
-        loadVideos(movieID);
-        loadReviews(movieID);
+        mMovie.setValue(movie);
+        if (mMovie.getValue() != null) {
+            int movieID = mMovie.getValue().getId();
+            configureIsFavorite(movieID);
+            loadVideos(movieID);
+            loadReviews(movieID);
+        } else {
+            mHasFailedToLoad.setValue(true);
+        }
     }
 
     public void onFavoriteClick() {
-        int movieID = mMovie.getId();
+        if (mMovie.getValue() == null) return;
         AppExecutors.getInstance().diskIO().execute(() -> {
             if (mIsFavorite.getValue() != null) {
-                if (mIsFavorite.getValue()) {
-                    mDatabase.favoritesDao().insertMovie(mMovie);
-                } else {
-                    mDatabase.favoritesDao().deleteMovie(movieID);
-                }
-                configureIsFavorite(movieID);
+                if (mIsFavorite.getValue()) mFavoritesDao.insertMovie(mMovie.getValue());
+                else mFavoritesDao.deleteMovie(mMovie.getValue());
             }
+            configureIsFavorite(mMovie.getValue().getId());
         });
     }
 
     private void configureIsFavorite(int movieID) {
         AppExecutors.getInstance().diskIO().execute(() -> {
-            Movie favorite = mDatabase.favoritesDao().loadMovie(movieID);
+            Movie favorite = mFavoritesDao.loadMovie(movieID);
             AppExecutors.getInstance().mainThread().execute(() -> {
                 boolean isFavorite = favorite == null;
                 mIsFavorite.setValue(isFavorite);
@@ -106,8 +112,15 @@ public class MovieDetailsViewModel extends AndroidViewModel {
         });
     }
 
-    private boolean hasDetailsLoaded() {
-        return mVideoList != null && mReviewList != null;
+    private boolean hasLoaded() {
+        Boolean hasFavoritesLoaded = mMovie.getValue() != null
+                && mIsFavorite.getValue() != null
+                && mIsFavorite.getValue();
+        Boolean hasLoaded = mVideoList.getValue() != null
+                && mReviewList.getValue() != null
+                && mIsFavorite.getValue() != null
+                && mMovie.getValue() != null;
+        return hasFavoritesLoaded || hasLoaded;
     }
 
 }

@@ -2,6 +2,7 @@ package com.jewong.popularmovies.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -29,7 +30,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
     public static final String SIZE = "w780";
     ActivityMovieDetailsBinding mBinding;
     MovieDetailsViewModel mMovieDetailsViewModel;
-    ReviewAdapter mReviewAdapter = new ReviewAdapter(null);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,24 +49,20 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
     private void initializeViews() {
         if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mBinding.reviewRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mBinding.reviewRecyclerView.setAdapter(mReviewAdapter);
-        mBinding.favorite.setOnClickListener(v -> mMovieDetailsViewModel.onFavoriteClick());
+        mBinding.reviewsLayout.reviewRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mBinding.reviewsLayout.reviewRecyclerView.setAdapter(new ReviewAdapter());
+        mBinding.detailsLayout.favorite.setOnClickListener(v -> mMovieDetailsViewModel.onFavoriteClick());
     }
 
     private void initializeObservers() {
         mMovieDetailsViewModel.mVideoList.observe(this, this::renderTrailer);
         mMovieDetailsViewModel.mReviewList.observe(this, this::renderReviews);
         mMovieDetailsViewModel.mIsFavorite.observe(this, this::renderFavorite);
+        mMovieDetailsViewModel.mMovie.observe(this, this::renderDetails);
+        mMovieDetailsViewModel.mHasLoaded.observe(this, this::hideProgressBar);
         mMovieDetailsViewModel.mHasFailedToLoad.observe(this, hasFailedToLoad -> {
-            int progressBarVisibility = hasFailedToLoad ? View.GONE : View.VISIBLE;
+            hideProgressBar(hasFailedToLoad);
             if (hasFailedToLoad) showErrorToast();
-            mBinding.progressBarContainer.setVisibility(progressBarVisibility);
-        });
-        mMovieDetailsViewModel.mHasDetailsLoaded.observe(this, hasLoaded -> {
-            int progressBarVisibility = hasLoaded ? View.GONE : View.VISIBLE;
-            if (hasLoaded) renderDetails(mMovieDetailsViewModel.mMovie);
-            mBinding.progressBarContainer.setVisibility(progressBarVisibility);
         });
     }
 
@@ -80,34 +76,42 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private void renderDetails(Movie movie) {
         final String posterPath = movie.getPosterPath();
         final String imageUri = String.format("%s%s%s", BASE_URL, SIZE, posterPath);
-        final String voterAverage = movie.getVoteAverage() != null ?
-                movie.getVoteAverage().toString() : "";
+        final float rating = (movie.getVoteAverage().floatValue() / 2.0f) * 1.0f;
         Picasso.get().load(imageUri).into(mBinding.poster);
-        mBinding.title.setText(movie.getTitle());
-        mBinding.releaseDate.setText(movie.getReleaseDate());
-        mBinding.voteAverage.setText(voterAverage);
-        mBinding.plot.setText(movie.getOverview());
+        mBinding.detailsLayout.title.setText(movie.getTitle());
+        mBinding.detailsLayout.releaseDate.setText(movie.getReleaseDate());
+        mBinding.detailsLayout.plot.setText(movie.getOverview());
+        mBinding.detailsLayout.rating.setRating(rating);
     }
 
     private void renderFavorite(Boolean isFavorite) {
         int stringId = isFavorite ? R.string.favorite : R.string.unfavorite;
-        mBinding.favorite.setText(getString(stringId));
+        mBinding.detailsLayout.favorite.setText(getString(stringId));
     }
 
     private void renderReviews(List<Review> reviews) {
-        if (reviews == null) return;
-        mReviewAdapter.setData(reviews);
+        ReviewAdapter adapter = (ReviewAdapter) mBinding.reviewsLayout.reviewRecyclerView.getAdapter();
+        String title = String.format(getString(R.string.reviews), reviews.size());
+        if (adapter != null) {
+            adapter.setData(reviews);
+            mBinding.reviewsLayout.title.setText(title);
+            if (reviews.size() != 0) mBinding.reviewsLayout.noReviews.setVisibility(View.GONE);
+        }
     }
 
     private void renderTrailer(List<Video> videos) {
-        if (videos == null) return;
         for (Video video : videos) {
             if (video.getType().equals("Trailer")) {
-                mBinding.trailer.setVisibility(View.VISIBLE);
-                mBinding.trailer.setOnClickListener(v -> playTrailer(video));
+                mBinding.detailsLayout.trailer.setVisibility(View.VISIBLE);
+                mBinding.detailsLayout.trailer.setOnClickListener(v -> playTrailer(video));
                 break;
             }
         }
+    }
+
+    private void hideProgressBar(Boolean hideProgressBar) {
+        int visibility = hideProgressBar ? View.GONE : View.VISIBLE;
+        mBinding.progressBar.setVisibility(visibility);
     }
 
     private void playTrailer(Video trailer) {

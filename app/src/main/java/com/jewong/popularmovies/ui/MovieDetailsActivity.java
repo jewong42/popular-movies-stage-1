@@ -115,16 +115,14 @@ public class MovieDetailsActivity extends AppCompatActivity {
     }
 
     private void playTrailer(Video trailer) {
-        Intent appIntent = new Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse("vnd.youtube:" + trailer.getId()));
-        Intent webIntent = new Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse("http://www.youtube.com/watch?v=" + trailer.getId()));
+        Intent appIntent = new Intent(Intent.ACTION_VIEW)
+                .setData(Uri.parse("vnd.youtube:" + trailer.getId()));
+        Intent webIntent = new Intent(Intent.ACTION_VIEW)
+                .setData(Uri.parse("http://www.youtube.com/watch?v=" + trailer.getId()));
         try {
-            getBaseContext().startActivity(appIntent);
-        } catch (ActivityNotFoundException ex) {
-            getBaseContext().startActivity(webIntent);
+            startActivity(appIntent);
+        } catch (Exception e) {
+            startActivity(webIntent);
         }
     }
 

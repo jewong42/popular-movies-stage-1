@@ -15,7 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MovieAPIClient {
 
     // TODO: Replace API_KEY. Removed prior to submission per instructions.
-    private static final String API_KEY = "baecc17a5e904cabd97067cacadb8603";
+    private static final String API_KEY = "";
     private static final String BASE_URL = "https://api.themoviedb.org/";
     private MovieAPI mMovieAPI;
 
